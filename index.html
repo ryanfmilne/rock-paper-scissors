@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="display-container">
+        <h1><span class="rock-title">Rock</span>, <span class="paper-title">Paper</span> or <span class="scissors-title">Scissors</span>?</h1>
+        <h2 class="display">Rock</h2>
+    </div>
+
+
+    <img class="coco" src="./coco.png" alt="">
+
+    <ul class="main-screen">
+        <li class="rock"><img src="./rock.png" alt=""></li>
+        <li class="paper"><img src="./paper.png" alt=""></li>
+        <li class="scissors"><img src="./scissors.png" alt=""></li>
+    </ul>
+
+    <ul class="shake-screen">
+        <li class="rock battle-left"><img class="battle-left" src="./rock.png" alt=""></li>
+        <li class="rock battle-right"><img class="battle-right" src="./rock.png" alt=""></li>
+    </ul>
+      
+    <p class="footie">rock paper scissors - Give it a go!</p>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+       
+
+        let rock = document.querySelector(".main-screen .rock");
+        let rockTitle = document.querySelector(".rock-title");
+        let paper = document.querySelector(".main-screen .paper");
+        let paperTitle = document.querySelector(".paper-title");
+        let scissors = document.querySelector(".main-screen .scissors");
+        let scissorsTitle = document.querySelector(".scissors-title");
+
+        let fullBanner = document.querySelector("h1");
+
+        let display = document.querySelector(".display");
+
+        let coco = document.querySelector(".coco");
+        let allHands = document.querySelectorAll(".main-screen li");
+
+
+        for (i = 0; i < allHands.length; i++) {
+            allHands[i].addEventListener("click", function(e) {
+                // replace display text with choice
+        
+                // remove the hands
+                gsap.to(allHands, {scale: 0, opacity: 0, duration: .4});
+                battle();
+
+                setTimeout(() => {
+                    console.log("Delayed for 1 second.");
+
+                    let everything = document.querySelectorAll("ul"); 
+                    gsap.to(everything, { opacity: 0});
+                    gsap.to(display, { opacity: 0});
+                    // coco
+                    gsap.to(coco, {opacity: 1,
+                    y:0,
+                    ease: "elastic.out(1, 0.3)",
+                    duration: 2,
+                    scale: 1
+                    });
+
+                }, 4000);
+
+                setTimeout(() => {
+                    coco.classList.add("float");
+                }, 6000);
+
+                
+            });
+        }
+
+        // rock
+        rock.addEventListener("mouseover", function() {
+            display.innerHTML = "Rock";
+            gsap.to(fullBanner, {opacity: 0, scale: 0, duration: .2});
+            gsap.to(display, {opacity: 1, scale: 1.4, duration: .2});
+        });
+
+        rock.addEventListener("mouseout", function() {
+            display.innerHTML = "";
+            gsap.to(fullBanner, {opacity: 1, scale: 1, duration: .2});
+            gsap.to(display, {opacity: 0, scale: 0, duration: .2});
+        });
+
+
+        // paper
+        paper.addEventListener("mouseover", function() {
+            display.innerHTML = "Paper";
+            gsap.to(fullBanner, {opacity: 0, scale: 0, duration: .2});
+            gsap.to(display, {opacity: 1, scale: 1.4, duration: .2});
+        });
+
+        paper.addEventListener("mouseout", function() {
+            display.innerHTML = "";
+            gsap.to(fullBanner, {opacity: 1, scale: 1, duration: .2});
+            gsap.to(display, {opacity: 0, scale: 0, duration: .2});
+        });
+
+        // scissors
+        scissors.addEventListener("mouseover", function() {
+            display.innerHTML = "Scissors";
+            gsap.to(fullBanner, {opacity: 0, scale: 0, duration: .2});
+            gsap.to(display, {opacity: 1, scale: 1.4, duration: .2});
+        });
+
+        scissors.addEventListener("mouseout", function() {
+            display.innerHTML = "";
+            gsap.to(fullBanner, {opacity: 1, scale: 1, duration: .2});
+            gsap.to(display, {opacity: 0, scale: 0, duration: .2});
+        });
+
+
+        // battle 
+
+        function battle() {
+            let shakeScreen = document.querySelector(".shake-screen");
+            gsap.to(shakeScreen, {opacity: 1,
+                y:-20,
+                duration: .8
+            });
+            tl = gsap.timeline({repeat: 3,
+                delay: 1.4
+            })
+            let fistLeft = document.querySelector(".battle-left");
+            let fistRight = document.querySelector(".battle-right");
+            // left up
+            tl.to(fistLeft, {rotate: -45,
+                ease: "elastic.out(1, 0.3)",
+                duration: .4
+            });
+            // right up
+            tl.to(fistRight, {rotate: 45,
+                ease: "elastic.out(1, 0.3)",
+                duration: .4
+            }, "-=.4");
+
+            // left down
+            tl.to(fistLeft, {rotate: 0,
+                ease: "elastic.out(1, 0.3)",
+                duration: .1
+            }, "-=.4");
+
+            // right down
+            tl.to(fistRight, {rotate: 0,
+                ease: "elastic.out(1, 0.3)",
+                duration: .1
+            }, "-=.4");
+
+        
+
+        }
+
+
+        function results() {
+            alert('results');
+        }
+
+
+
+
+
+        // // intro animation 
+        // function intro() {
+        //     let tl = gsap.timeline();
+        //     gsap.set(banner, { opacity: 0});
+        //     tl.to(banner, {y: -10, opacity: 1, duration: 1});
+        // }
+        // intro();
+
+
+
+
+    </script>
+
+</body>
+</html>
